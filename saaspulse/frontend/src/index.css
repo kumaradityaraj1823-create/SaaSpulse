@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* Theme tokens. Components only use these roles, so light/dark swap in one place. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+  --page: #f3f4f2;
+  --surface: #ffffff;
+  --surface-2: #f8f9f7;
+  --hover: #f1f2f0;
+  --line: #e3e5e2;
+  --line-strong: #cfd2ce;
+  --ink: #15171a;
+  --ink-2: #4e535a;
+  --muted: #80858c;
+  --inverse: #ffffff;
+  --focus: #2a78d6;
+
+  --up: #12803c;
+  --up-bg: #e7f5ec;
+  --down: #c2410c;
+  --down-bg: #fdeee6;
+  --warn-bg: #fdf5e1;
+  --warn: #8a5a00;
+
+  /* Data series (validated palette) */
+  --s-mrr: #2a78d6;
+  --s-new: #2a78d6;
+  --s-expansion: #1baf7a;
+  --s-lost: #eb6834;
+  --s-1: #2a78d6;
+  --s-2: #eb6834;
+  --s-3: #1baf7a;
+  --s-4: #eda100;
+  --grid: #eceeeb;
+  --axis: #cfd2ce;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0f1113;
+  --surface: #17191c;
+  --surface-2: #1c1f23;
+  --hover: #22262a;
+  --line: #2a2e33;
+  --line-strong: #3a3f45;
+  --ink: #eceeef;
+  --ink-2: #b4b9bf;
+  --muted: #868c93;
+  --inverse: #15171a;
+  --focus: #5598e7;
+
+  --up: #3fbf6f;
+  --up-bg: #15291d;
+  --down: #f08a5d;
+  --down-bg: #2e1c14;
+  --warn-bg: #2b2412;
+  --warn: #e3b341;
+
+  --s-mrr: #3987e5;
+  --s-new: #3987e5;
+  --s-expansion: #199e70;
+  --s-lost: #d95926;
+  --s-1: #3987e5;
+  --s-2: #d95926;
+  --s-3: #199e70;
+  --s-4: #c98500;
+  --grid: #24282c;
+  --axis: #3a3f45;
+}
+
+@theme inline {
+  --font-sans: "Instrument Sans Variable", "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-hover: var(--hover);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-inverse: var(--inverse);
+  --color-focus: var(--focus);
+  --color-up: var(--up);
+  --color-up-bg: var(--up-bg);
+  --color-down: var(--down);
+  --color-down-bg: var(--down-bg);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-s1: var(--s-1);
+  --color-s2: var(--s-2);
+  --color-s3: var(--s-3);
+  --color-s4: var(--s-4);
+}
+
+@layer base {
+  html { background: var(--page); }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01";
+  }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+  ::selection { background: color-mix(in srgb, var(--focus) 25%, transparent); }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+}
+
+/* Condensed display figures for headline numbers */
+.figure-display {
+  font-stretch: 78%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-variant-numeric: lining-nums;
+}
+.tnum { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Drawer / modal motion — responds to the user's action */
+@keyframes slide-in { from { transform: translateX(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes pop-in { from { transform: translateY(6px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.anim-slide-in { animation: slide-in 180ms cubic-bezier(.2,.8,.2,1); }
+.anim-pop-in { animation: pop-in 160ms cubic-bezier(.2,.8,.2,1); }
+.anim-fade-in { animation: fade-in 140ms ease-out; }
+
+/* Recharts: no focus outline box around the whole chart on click */
+.recharts-wrapper *:focus { outline: none; }
